@@ -19,7 +19,11 @@ def index():
 def upload():
     if (inference.initialized == False):
         inference.initialize()
+    if 'inputFile' not in request.files:
+        return 'No file selected.'
     file = request.files['inputFile']
+    if file.filename == '':
+        return 'No file selected.'
     file_dst = inference.process_image(file)
     return send_file(file_dst, mimetype="image/gif")
 
